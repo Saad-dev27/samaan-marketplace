@@ -1,0 +1,6 @@
+import {Heart,Plus,Star} from 'lucide-react'
+import {Link} from 'react-router-dom'
+import {money} from './Layout'
+import {useStore} from '../store/StoreContext'
+export function ProductCard({product}){const{addCart,toggleWish,wishlist}=useStore(),saved=wishlist.some(x=>x.id===product.id);return <article className="product-card"><div className="product-media"><Link to={`/product/${product.id}`}><img src={product.thumbnail} alt={product.title} loading="lazy"/></Link>{product.discountPercentage>10&&<span className="pill">-{Math.round(product.discountPercentage)}%</span>}<button className={`wish ${saved?'saved':''}`} onClick={()=>toggleWish(product)} aria-label={saved?'Remove from wishlist':'Add to wishlist'}><Heart/></button><button className="quick-add" onClick={()=>addCart(product)}><Plus/> Add to bag</button></div><div className="product-info"><span>{product.brand||product.category}</span><Link to={`/product/${product.id}`}><h3>{product.title}</h3></Link><div><b>{money(product.price)}</b><small><Star fill="currentColor"/> {Number(product.rating).toFixed(1)}</small></div></div></article>}
+export function ProductSkeleton(){return <div className="product-card skeleton-card"><div className="skeleton media"/><div className="skeleton line"/><div className="skeleton line short"/></div>}
